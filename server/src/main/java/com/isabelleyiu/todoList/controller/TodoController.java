@@ -40,7 +40,8 @@ public class TodoController {
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-  public void deleteTodoById(@PathVariable ObjectId id) {
+  public Boolean deleteTodoById(@PathVariable ObjectId id) {
     todoRepository.delete(todoRepository.findBy_id(id));
+    return true;
   }
 }
