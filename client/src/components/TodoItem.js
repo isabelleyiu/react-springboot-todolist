@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment';
 
-const TodoItem = ({ todo, deleteTodo, toggleCompleted }) => {
+const TodoItem = ({ todo, deleteTodo, toggleCompleted, selectTodo }) => {
   const time = moment(todo._id.time).fromNow();
   return (
     <div className="item">
@@ -11,6 +11,11 @@ const TodoItem = ({ todo, deleteTodo, toggleCompleted }) => {
         className="ui button basic negative right floated content"
         onClick={ deleteTodo }
         >Delete
+      </button>
+      <button
+        className="ui button basic right floated content"
+        onClick={ selectTodo }
+        >Select
       </button>
       <button
         className="ui button basic secondary right floated content"

@@ -23,7 +23,7 @@ export class TodoForm extends Component {
   }
   render() {
     return (
-      <form className="ui form">
+      <form className="ui form center aligned header">
         <input 
           className="ui input focus massive"
           type="text"
@@ -43,4 +43,4 @@ export class TodoForm extends Component {
   }
 }
 
-export default TodoForm
+export default TodoForm;

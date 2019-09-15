@@ -22,7 +22,7 @@ public class TodoController {
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public Todo getTodoById(@PathVariable("id") ObjectId id) {
+  public Todo getTodoById(@PathVariable ObjectId id) {
     return todoRepository.findBy_id(id);
   }
 

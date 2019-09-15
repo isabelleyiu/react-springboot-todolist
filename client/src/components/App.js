@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import TodoForm from './TodoForm';
-import TodoItem from './TodoItem';
+import TodoItem from './TodoItem'
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: []
+      todos: [],
+      selectedTodo: null
     }
   }
   componentDidMount() {
@@ -17,6 +18,14 @@ class App extends Component {
       .then(todos => todos.json())
       .then(todos => this.setState({
         todos
+      }))
+      .catch(e => console.log(e))
+  }
+  selectTodo = (todoId) => {
+    fetch(`api/todos/${todoId}`)
+      .then(todo => todo.json())
+      .then(todo => this.setState({
+        selectedTodo: todo
       }))
       .catch(e => console.log(e))
   }
@@ -50,12 +59,12 @@ class App extends Component {
       .catch(e => console.log(e))
   }
   toggleCompleted = (todoId) => {
-    const updatedTodo = this.state.todos.filter(todo => todo._Id === todoId);
-    updatedTodo[0].isCompleted = !updatedTodo[0].isCompleted;
+    const updatedTodo = this.state.todos.filter(todo => todo._Id === todoId)[0];
+    updatedTodo.isCompleted = !updatedTodo.isCompleted;
 
     fetch(`api/todos/${todoId}`, {
       method: 'PUT',
-      body: JSON.stringify(updatedTodo[0]),
+      body: JSON.stringify(updatedTodo),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -73,11 +82,8 @@ class App extends Component {
     return (
       <div className="ui container" >
         <h1 style={{marginTop: "2%"}} className="ui center aligned header">Todo List</h1>
-        <div className="ui center aligned header">
-          <TodoForm createTodo={this.createTodo} />
-        </div>
-        
-        
+        <TodoForm createTodo={this.createTodo} />
+        {this.state.selectedTodo && <p>You have selected: {this.state.selectedTodo.title}</p>}
         <h2 style={{color: "#2185d0"}}>In Progress Tasks</h2>
         <div className="ui ordered list divided">
           {this.state.todos.map(todo => {
@@ -87,10 +93,12 @@ class App extends Component {
                 todo={todo} 
                 deleteTodo={() => this.deleteTodo(todo._Id)}
                 toggleCompleted={() => this.toggleCompleted(todo._Id)}
+                selectTodo={() => this.selectTodo(todo._Id)}
               />
             }
           })}
         </div>  
+
         <h2 style={{color: "#2185d0"}}>Completed Tasks</h2>
         <div className="ui ordered list divided">
           {this.state.todos.map(todo => {
@@ -100,6 +108,7 @@ class App extends Component {
                 todo={todo} 
                 deleteTodo={() => this.deleteTodo(todo._Id)}
                 toggleCompleted={() => this.toggleCompleted(todo._Id)}
+                selectTodo={() => this.selectTodo(todo._Id)}
               />
             }
           })}
