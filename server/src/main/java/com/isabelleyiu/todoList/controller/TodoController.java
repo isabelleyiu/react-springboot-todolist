@@ -34,9 +34,10 @@ public class TodoController {
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-  public void updateTodoById(@PathVariable("id") ObjectId id, @Valid @RequestBody Todo todo) {
+  public Todo updateTodoById(@PathVariable ObjectId id, @Valid @RequestBody Todo todo) {
     todo.set_Id(id);
     todoRepository.save(todo);
+    return todo;
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

@@ -19,19 +19,21 @@ export class TodoForm extends Component {
   }
   render() {
     return (
-      <div>
+      <form className="ui form">
         <input className="ui input focus massive"
           type="text"
-          placeholder="Create new todo"
+          placeholder="What do you need to get done?"
           value={this.state.title}
           onChange={this.handleChange}
         >
         </input>
         <button
+          style={{marginTop: "2%"}}
           className="ui button primary"
           onClick={this.handleSubmit}
-        >Submit</button>
-      </div>
+          >Submit
+        </button>
+      </form>
     )
   }
 }
