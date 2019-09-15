@@ -78,7 +78,7 @@ class App extends Component {
         </div>
         
         
-        <h2 style={{color: "blue"}}>In Progress Tasks</h2>
+        <h2 style={{color: "#2185d0"}}>In Progress Tasks</h2>
         <div className="ui ordered list divided">
           {this.state.todos.map(todo => {
             if(!todo.isCompleted) {
@@ -91,7 +91,7 @@ class App extends Component {
             }
           })}
         </div>  
-        <h2 style={{color: "blue"}}>Completed Tasks</h2>
+        <h2 style={{color: "#2185d0"}}>Completed Tasks</h2>
         <div className="ui ordered list divided">
           {this.state.todos.map(todo => {
             if(todo.isCompleted) {

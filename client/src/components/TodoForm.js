@@ -15,12 +15,17 @@ export class TodoForm extends Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-    this.props.createTodo(this.state)
+    this.props.createTodo(this.state);
+    this.setState({
+      title: "",
+      isCompleted: false
+    })
   }
   render() {
     return (
       <form className="ui form">
-        <input className="ui input focus massive"
+        <input 
+          className="ui input focus massive"
           type="text"
           placeholder="What do you need to get done?"
           value={this.state.title}
