@@ -21,14 +21,6 @@ class App extends Component {
       }))
       .catch(e => console.log(e))
   }
-  selectTodo = (todoId) => {
-    fetch(`api/todos/${todoId}`)
-      .then(todo => todo.json())
-      .then(todo => this.setState({
-        selectedTodo: todo
-      }))
-      .catch(e => console.log(e))
-  }
   createTodo =  newTodo => {
     fetch('api/todos/', {
       method: 'POST',
@@ -78,6 +70,27 @@ class App extends Component {
       })
       .catch(e => console.log(e))
   }
+  updateTodo = (todoId, title) => {
+    console.log(todoId, title)
+    const updatedTodo = this.state.todos.filter(todo => todo._Id === todoId)[0];
+    updatedTodo.title = title;
+
+    fetch(`api/todos/${todoId}`, {
+      method: 'PUT',
+      body: JSON.stringify(updatedTodo),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(updatedTodo => {
+        const todos = this.state.todos.filter(todo => todo._Id !== todoId);
+        this.setState({
+          todos: [...todos, updatedTodo]
+        })
+      })
+      .catch(e => console.log(e)).catch(e => console.log(e))
+  }
   render() {
     return (
       <div className="ui container" >
@@ -93,7 +106,7 @@ class App extends Component {
                 todo={todo} 
                 deleteTodo={() => this.deleteTodo(todo._Id)}
                 toggleCompleted={() => this.toggleCompleted(todo._Id)}
-                selectTodo={() => this.selectTodo(todo._Id)}
+                updateTodo={this.updateTodo}
               />
             }
           })}
@@ -108,7 +121,7 @@ class App extends Component {
                 todo={todo} 
                 deleteTodo={() => this.deleteTodo(todo._Id)}
                 toggleCompleted={() => this.toggleCompleted(todo._Id)}
-                selectTodo={() => this.selectTodo(todo._Id)}
+                updateTodo={this.updateTodo}
               />
             }
           })}
